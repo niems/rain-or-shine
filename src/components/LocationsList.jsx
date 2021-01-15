@@ -5,15 +5,15 @@ function LocationItems({ list }) {
   if (!list) return null;
 
   return list.map((item) => (
-    <li key={item.id} className="loc-item" id={`item-${item.id}`}>
+    <li key={item.id} className="loc-item" id={item.id}>
       {item.name}
     </li>
   ));
 }
 
-function LocationsList({ list }) {
+function LocationsList({ list, handleSelect }) {
   return (
-    <ul className="loc-list">
+    <ul className="loc-list" onClick={handleSelect}>
       <LocationItems list={list} />
     </ul>
   );
@@ -27,6 +27,7 @@ LocationsList.propTypes = {
       dataCoords: PropTypes.string.isRequired,
     })
   ),
+  handleSelect: PropTypes.func.isRequired,
 };
 
 export default LocationsList;
