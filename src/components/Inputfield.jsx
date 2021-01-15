@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import IconBtn from "./IconBtn";
 
-function Inputfield({ value, handleChange, handleClear, handleSubmit }) {
+function Inputfield({
+  value,
+  handleChange,
+  handleClear,
+  handleSubmit,
+  placeholder,
+}) {
   return (
     <form className="form" onSubmit={handleSubmit}>
       <IconBtn icon="arrow_back" type="button" handleClick={handleClear} />
@@ -11,6 +17,7 @@ function Inputfield({ value, handleChange, handleClear, handleSubmit }) {
         className="form__input"
         value={value}
         onChange={handleChange}
+        placeholder={placeholder}
       />
       <IconBtn icon="search" type="button" handleClick={handleSubmit} />
     </form>
@@ -22,6 +29,7 @@ Inputfield.propTypes = {
   handleChange: PropTypes.func.isRequired,
   handleClear: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
 };
 
 export default Inputfield;
