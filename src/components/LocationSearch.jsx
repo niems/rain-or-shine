@@ -4,7 +4,7 @@ import useInput from "./hooks/useInput";
 import LocationsList from "./LocationsList";
 import { autoCompleteSearch } from "./getWeatherData";
 
-function LocationSearch(props) {
+function LocationSearch({ currentLocation, locationDispatch }) {
   const [tempLocations, setTempLocations] = useState(null);
   const [inputValue, handleInputChange, updateInputValue] = useInput("");
 
@@ -41,14 +41,28 @@ function LocationSearch(props) {
     setTempLocations(locationsSplit);
   }
 
+  //*
   function handleLocationSelect(e) {
     e.preventDefault();
     const { id, className } = e.target;
-    console.log(`\n\nhandleLocationSelect() className: ${className}`);
-    console.log(`\tid: ${id}`);
 
-    //TODO: update current location (parent state) if NEW location is selected
-    //TODO: clear out current input and temp locations since one was selected
+    if (id) {
+      const selectedLocation = tempLocations.find((loc) => loc.id === id);
+      const payload = {
+        name: selectedLocation.name,
+        dataCoords: selectedLocation.dataCoords,
+      };
+
+      console.log(`\n\nselected location: ${JSON.stringify(selectedLocation)}`);
+      console.log(`payload: ${JSON.stringify(payload)}`);
+
+      //*
+      locationDispatch({ type: "new location", payload: payload });
+
+      //* clear temp data
+      setTempLocations(null);
+      updateInputValue("");
+    }
   }
 
   return (
@@ -58,8 +72,10 @@ function LocationSearch(props) {
         handleChange={handleInputChange}
         handleClear={handleClear}
         handleSubmit={handleSubmit}
+        placeholder={currentLocation}
       />
-      <LocationsList list={tempLocations} />
+
+      <LocationsList list={tempLocations} handleSelect={handleLocationSelect} />
     </div>
   );
 }
