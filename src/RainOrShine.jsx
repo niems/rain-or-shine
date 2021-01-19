@@ -1,5 +1,9 @@
 import React, { useReducer, useEffect } from "react";
 import LocationSearch from "./components/LocationSearch";
+import {
+  getForecastData,
+  parseForecastData,
+} from "./components/getWeatherData";
 import "./RainOrShine.css";
 
 const forecastInit = {
@@ -19,6 +23,13 @@ function forecastReducer(state, action) {
         forecast: null,
       };
 
+    case "update forecast":
+      console.log("forecastReducer(): update forecast");
+      return {
+        ...state,
+        forecast: action.payload,
+      };
+
     default:
       return state;
   }
@@ -27,11 +38,30 @@ function forecastReducer(state, action) {
 function RainOrShine(props) {
   const [state, dispatch] = useReducer(forecastReducer, forecastInit);
 
-  useEffect(async () => {
+  useEffect(() => {
     console.log("RainOrShine useEffect()");
-    //TODO: await forecast api request
-    //TODO: make sure forecast data is parsed
-    //TODO: update forecast data state
+    const numOfForecastDays = 7;
+
+    async function getForecast() {
+      const forecastData = await getForecastData(
+        state.currentLocation.dataCoords,
+        numOfForecastDays
+      );
+
+      if (!forecastData) return;
+
+      const parsedForecast = parseForecastData(forecastData);
+
+      //for (let i = 0; i < parsedForecast.length; i++) {
+      //console.log(`day: ${JSON.stringify(parsedForecast[i])}`);
+      //}
+
+      dispatch({ type: "update forecast", payload: parsedForecast });
+    }
+
+    if (state.currentLocation.dataCoords) {
+      getForecast();
+    }
   }, [state.currentLocation.dataCoords]);
 
   return (
