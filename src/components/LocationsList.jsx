@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+//* renders the list of locations from the search api
 function LocationItems({ list }) {
   if (!list) return null;
 
@@ -24,7 +25,7 @@ LocationsList.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       id: PropTypes.string.isRequired,
-      dataCoords: PropTypes.string.isRequired,
+      dataCoords: PropTypes.object.isRequired,
     })
   ),
   handleSelect: PropTypes.func.isRequired,
