@@ -1,9 +1,12 @@
 import React, { useReducer, useEffect } from "react";
+import Menu from "./components/Menu";
 import LocationSearch from "./components/LocationSearch";
+import ForecastView from "./components/ForecastView";
 import {
   getForecastData,
   parseForecastData,
 } from "./components/getWeatherData";
+
 import "./RainOrShine.css";
 
 const forecastInit = {
@@ -11,24 +14,42 @@ const forecastInit = {
     name: null,
     dataCoords: null,
   },
+  temperatureUnitType: "imperial", //* defaults to fahrenheit
+  currentDay: null,
   forecast: null,
 };
 
 function forecastReducer(state, action) {
   switch (action.type) {
     case "new location":
-      console.log("forecastReducer(): new location");
       return {
         currentLocation: action.payload,
+        temperatureUnitType: state.temperatureUnitType,
+        currentDay: null,
         forecast: null,
       };
 
     case "update forecast":
-      console.log("forecastReducer(): update forecast");
       return {
         ...state,
-        forecast: action.payload,
+        currentDay: action.payload.current,
+        forecast: action.payload.forecast,
       };
+
+    case "update unit type":
+      //* unit type changed
+      if (state.temperatureUnitType !== action.payload.unitType) {
+        const newUnitType = action.payload.unitType;
+
+        return {
+          currentLocation: state.currentLocation,
+          temperatureUnitType: newUnitType,
+          currentDay: action.payload.weather.current,
+          forecast: action.payload.weather.forecast,
+        };
+      } else {
+        return state;
+      }
 
     default:
       return state;
@@ -39,23 +60,15 @@ function RainOrShine(props) {
   const [state, dispatch] = useReducer(forecastReducer, forecastInit);
 
   useEffect(() => {
-    console.log("RainOrShine useEffect()");
-    const numOfForecastDays = 7;
-
     async function getForecast() {
       const forecastData = await getForecastData(
         state.currentLocation.dataCoords,
-        numOfForecastDays
+        state.temperatureUnitType
       );
 
       if (!forecastData) return;
 
       const parsedForecast = parseForecastData(forecastData);
-
-      //for (let i = 0; i < parsedForecast.length; i++) {
-      //console.log(`day: ${JSON.stringify(parsedForecast[i])}`);
-      //}
-
       dispatch({ type: "update forecast", payload: parsedForecast });
     }
 
@@ -64,13 +77,42 @@ function RainOrShine(props) {
     }
   }, [state.currentLocation.dataCoords]);
 
+  //* if unit type changes, this requests the new forecast
+  //* w/updated unit types. Then
+  async function handleUnitUpdate(unitType) {
+    if (!unitType) return;
+
+    //* unit type changed
+    if (unitType !== state.temperatureUnitType) {
+      const forecastData = await getForecastData(
+        state.currentLocation.dataCoords,
+        unitType
+      );
+
+      if (!forecastData) return;
+
+      const parsedForecast = parseForecastData(forecastData);
+      dispatch({
+        type: "update unit type",
+        payload: { weather: parsedForecast, unitType: unitType },
+      });
+    }
+  }
+
   return (
-    <div className="rain-or-shine">
+    <main role="main" className="rain-or-shine">
       <LocationSearch
         currentLocation={state.currentLocation.name}
         locationDispatch={dispatch}
       />
-    </div>
+      <ForecastView
+        unitType={state.temperatureUnitType}
+        currentDay={state.currentDay}
+        forecast={state.forecast}
+        currentLocation={state.currentLocation.name}
+      />
+      <Menu handleUnitUpdate={handleUnitUpdate} />
+    </main>
   );
 }
 
