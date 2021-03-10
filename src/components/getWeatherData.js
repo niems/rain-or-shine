@@ -10,8 +10,6 @@ const FORECAST_API_KEY = process.env.REACT_APP_WEATHER_FORECAST_API_KEY;
 
 const BASE_SEARCH_URL = "http://api.weatherapi.com/v1";
 const BASE_FORECAST_URL = "https://api.openweathermap.org/data/2.5";
-console.log(`getWeatherData() search api key: ${SEARCH_API_KEY}`);
-console.log(`forecast api key: ${FORECAST_API_KEY}`);
 
 //* returns array of location matches based on query
 export function autoCompleteSearch(query) {
@@ -37,8 +35,6 @@ export function parseForecastData(data) {
   for (let i = 0; i < parsedData.forecast.length; i++) {
     const daily = parsedData.forecast[i];
 
-    //!daily.dt = getLocaleString(daily.dt);
-    //* new parsings for 'tomorrow' - may effect 'weekly'
     daily.weeklyDT = getLocaleString(daily.dt);
     daily.dt = getDateTimeString(daily.dt);
     daily.temp.day = getFixedTemp(daily.temp.day);
@@ -49,8 +45,6 @@ export function parseForecastData(data) {
 
     daily.temp.day = getFixedTemp(daily.temp.day);
     daily.temp.night = getFixedTemp(daily.temp.night);
-    console.log(`\n\n\t - rain: ${daily.rain}`);
-    console.log(`\t - probability of precipitation: ${daily["pop"]}`);
 
     parsedData.forecast[i] = daily;
   }
@@ -74,7 +68,6 @@ export function getForecastData(query, unitType = "imperial") {
     );
   }
 
-  console.log(`getForecastData() query: ${JSON.stringify(query)}`);
   const forecastData = fetch(url).then((response) => response.json());
 
   return forecastData;
