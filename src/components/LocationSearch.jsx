@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import Inputfield from "./Inputfield";
 import useInput from "./hooks/useInput";
 import LocationsList from "./LocationsList";
@@ -10,19 +12,17 @@ function LocationSearch({ currentLocation, locationDispatch }) {
 
   //* clears input and temp locations on arrow click
   function handleClear(e) {
-    console.log("handleClear()");
     e.preventDefault();
     updateInputValue("");
     setTempLocations(null);
   }
 
+  //* handles pulling the possible location matches from the city search & updating the match-state
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log("handleSubmit()");
 
     if (inputValue === "") return;
 
-    //TODO: don't send api request if input is the same as current location (parent state)
     const locationsArr = await autoCompleteSearch(inputValue);
 
     //* stores only the city, state out of the location name
@@ -34,17 +34,21 @@ function LocationSearch({ currentLocation, locationDispatch }) {
       locationsSplit.push({
         name: tempFinal,
         id: `${locationsArr[i].id}`,
-        dataCoords: `${locationsArr[i].lat},${locationsArr[i].lon}`,
+        dataCoords: {
+          lat: locationsArr[i].lat,
+          lon: locationsArr[i].lon,
+        },
       });
     }
 
     setTempLocations(locationsSplit);
   }
 
-  //*
+  //* clears out the temporary locations from city search & gets
+  //* ready for requesting the forecast data for the selected city
   function handleLocationSelect(e) {
     e.preventDefault();
-    const { id, className } = e.target;
+    const { id } = e.target;
 
     if (id) {
       const selectedLocation = tempLocations.find((loc) => loc.id === id);
@@ -53,13 +57,7 @@ function LocationSearch({ currentLocation, locationDispatch }) {
         dataCoords: selectedLocation.dataCoords,
       };
 
-      console.log(`\n\nselected location: ${JSON.stringify(selectedLocation)}`);
-      console.log(`payload: ${JSON.stringify(payload)}`);
-
-      //*
       locationDispatch({ type: "new location", payload: payload });
-
-      //* clear temp data
       setTempLocations(null);
       updateInputValue("");
     }
@@ -79,5 +77,10 @@ function LocationSearch({ currentLocation, locationDispatch }) {
     </div>
   );
 }
+
+LocationSearch.propTypes = {
+  currentLocation: PropTypes.string,
+  locationDispatch: PropTypes.func.isRequired,
+};
 
 export default LocationSearch;
