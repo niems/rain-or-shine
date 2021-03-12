@@ -1,0 +1,25 @@
+{
+  "short_name": "Rain or Shine",
+  "name": "Rain or Shine",
+  "icons": [
+    {
+      "src": "beaker.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "beaker192w.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "beaker512w.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

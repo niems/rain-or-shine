@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/rain-or-shine/static/css/main.735ce0fc.chunk.css",
+    "main.js": "/rain-or-shine/static/js/main.4ac5262a.chunk.js",
+    "main.js.map": "/rain-or-shine/static/js/main.4ac5262a.chunk.js.map",
+    "runtime-main.js": "/rain-or-shine/static/js/runtime-main.994aa550.js",
+    "runtime-main.js.map": "/rain-or-shine/static/js/runtime-main.994aa550.js.map",
+    "static/js/2.25c594e4.chunk.js": "/rain-or-shine/static/js/2.25c594e4.chunk.js",
+    "static/js/2.25c594e4.chunk.js.map": "/rain-or-shine/static/js/2.25c594e4.chunk.js.map",
+    "static/js/3.59101ae2.chunk.js": "/rain-or-shine/static/js/3.59101ae2.chunk.js",
+    "static/js/3.59101ae2.chunk.js.map": "/rain-or-shine/static/js/3.59101ae2.chunk.js.map",
+    "index.html": "/rain-or-shine/index.html",
+    "static/css/main.735ce0fc.chunk.css.map": "/rain-or-shine/static/css/main.735ce0fc.chunk.css.map",
+    "static/js/2.25c594e4.chunk.js.LICENSE.txt": "/rain-or-shine/static/js/2.25c594e4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.994aa550.js",
+    "static/js/2.25c594e4.chunk.js",
+    "static/css/main.735ce0fc.chunk.css",
+    "static/js/main.4ac5262a.chunk.js"
+  ]
+}
