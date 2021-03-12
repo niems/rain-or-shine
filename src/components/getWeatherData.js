@@ -8,7 +8,7 @@ import {
 const SEARCH_API_KEY = process.env.REACT_APP_WEATHER_LOCATION_API_KEY;
 const FORECAST_API_KEY = process.env.REACT_APP_WEATHER_FORECAST_API_KEY;
 
-const BASE_SEARCH_URL = "http://api.weatherapi.com/v1";
+const BASE_SEARCH_URL = "https://api.weatherapi.com/v1";
 const BASE_FORECAST_URL = "https://api.openweathermap.org/data/2.5";
 
 //* returns array of location matches based on query
