@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/rain-or-shine/static/css/main.735ce0fc.chunk.css",
-    "main.js": "/rain-or-shine/static/js/main.76118f92.chunk.js",
-    "main.js.map": "/rain-or-shine/static/js/main.76118f92.chunk.js.map",
+    "main.js": "/rain-or-shine/static/js/main.3a31ee88.chunk.js",
+    "main.js.map": "/rain-or-shine/static/js/main.3a31ee88.chunk.js.map",
     "runtime-main.js": "/rain-or-shine/static/js/runtime-main.994aa550.js",
     "runtime-main.js.map": "/rain-or-shine/static/js/runtime-main.994aa550.js.map",
     "static/js/2.25c594e4.chunk.js": "/rain-or-shine/static/js/2.25c594e4.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.994aa550.js",
     "static/js/2.25c594e4.chunk.js",
     "static/css/main.735ce0fc.chunk.css",
-    "static/js/main.76118f92.chunk.js"
+    "static/js/main.3a31ee88.chunk.js"
   ]
 }
