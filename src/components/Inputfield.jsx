@@ -17,7 +17,7 @@ function Inputfield({
         className="form__input"
         value={value}
         onChange={handleChange}
-        placeholder={placeholder}
+        placeholder={placeholder || "Search a city..."}
       />
       <IconBtn icon="search" type="button" handleClick={handleSubmit} />
     </form>
